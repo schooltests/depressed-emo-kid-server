@@ -1,8 +1,10 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RedisCacheModule } from 'nest-utils';
+import { RedisCacheModule, vk } from 'nest-utils';
+import { BotModule } from './bot/bot.module';
 import { cacheConfig } from './config/cache.config';
 import { coreConfig } from './config/core.config';
 import { dbConfig } from './config/db.config';
@@ -41,10 +43,12 @@ import { vkConfig } from './config/vk.config';
       }),
       inject: [ConfigService],
     }),
+    HttpModule,
     ScheduleModule.forRoot(),
     RedisCacheModule,
+    BotModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [vk.VkLongpollService],
 })
 export class AppModule {}
