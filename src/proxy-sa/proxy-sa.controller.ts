@@ -4,26 +4,26 @@ import { CreateCommentDTO } from './dto/proxy-sa.model';
 import { ProxySAService } from './proxy-sa.service';
 
 @ApiTags('Proxy sa')
-@Controller('api/proxy-sa/article')
+@Controller('api/proxy-sa')
 export class ProxySAController {
   constructor(private readonly sa: ProxySAService) {}
 
-  @Get()
+  @Get('/articles')
   getArticlesList(@Query('page', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) page: number) {
     return this.sa.getArticlesList(page);
   }
 
-  @Get('/:uuid')
+  @Get('/article/:uuid')
   getArticle(@Param('uuid') uuid: string) {
     return this.sa.getArticleByUUID(uuid);
   }
 
-  @Get('/:uuid/comments')
+  @Get('/article/:uuid/comments')
   getComments(@Param('uuid') uuid: string) {
     return this.sa.getArticleComments(uuid);
   }
 
-  @Post('/:uuid/comment')
+  @Post('/article/:uuid/comment')
   createComment(@Param('uuid') uuid: string, @Body() model: CreateCommentDTO) {
     return this.sa.createComment(uuid, model);
   }
