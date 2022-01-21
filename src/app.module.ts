@@ -10,6 +10,7 @@ import { coreConfig } from './config/core.config';
 import { dbConfig } from './config/db.config';
 import { integrationConfig } from './config/integration.config';
 import { vkConfig } from './config/vk.config';
+import { ProxySA } from './proxy-sa/proxy-sa.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { vkConfig } from './config/vk.config';
     ScheduleModule.forRoot(),
     RedisCacheModule,
     BotModule,
+    ProxySA,
   ],
   controllers: [],
   providers: [vk.VkLongpollService],
