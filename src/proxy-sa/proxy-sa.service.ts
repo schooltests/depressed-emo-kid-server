@@ -48,7 +48,12 @@ export class ProxySAService {
   async createComment(uuid: string, data: CreateCommentModel) {
     try {
       const { data: response } = await firstValueFrom(
-        this.httpService.post<{ message: string }>(`/v1/article/${uuid}`, data),
+        this.httpService.post<{ message: string }>(`/v1/article/${uuid}`, {
+          email: data.email,
+          last_name: data.lastName,
+          first_name: data.firstName,
+          message: data.message,
+        }),
       );
       return response;
     } catch (error) {
