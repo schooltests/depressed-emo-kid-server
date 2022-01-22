@@ -1,17 +1,16 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { CreateCommentModel } from 'src/contracts/proxy-sa';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class ProxySAService {
-  constructor(private readonly httpService: HttpService) {
-    httpService.axiosRef.defaults.baseURL = 'http://denver.sensearena.com/api';
-  }
+  private readonly baseUrl = 'http://denver.sensearena.com/api';
+  constructor(private readonly httpService: HttpService) {}
 
   async getArticlesList(page: number) {
     try {
-      const { data } = await firstValueFrom(this.httpService.get(`/v1/articles?page=${page}`));
+      const { data } = await firstValueFrom(this.httpService.get(`${this.baseUrl}/v1/articles?page=${page}`));
       return data;
     } catch (error) {
       console.error(error);
@@ -23,7 +22,7 @@ export class ProxySAService {
   }
   async getArticleByUUID(uuid: string) {
     try {
-      const { data } = await firstValueFrom(this.httpService.get(`/v1/article/${uuid}`));
+      const { data } = await firstValueFrom(this.httpService.get(`${this.baseUrl}/v1/article/${uuid}`));
       return data;
     } catch (error) {
       console.error(error);
@@ -35,7 +34,7 @@ export class ProxySAService {
   }
   async getArticleComments(uuid: string) {
     try {
-      const { data } = await firstValueFrom(this.httpService.get(`/v1/article/${uuid}/comments`));
+      const { data } = await firstValueFrom(this.httpService.get(`${this.baseUrl}/v1/article/${uuid}/comments`));
       return data;
     } catch (error) {
       console.error(error);
@@ -48,7 +47,7 @@ export class ProxySAService {
   async createComment(uuid: string, data: CreateCommentModel) {
     try {
       const { data: response } = await firstValueFrom(
-        this.httpService.post<{ message: string }>(`/v1/article/${uuid}`, {
+        this.httpService.post<{ message: string }>(`${this.baseUrl}/v1/article/${uuid}`, {
           email: data.email,
           last_name: data.lastName,
           first_name: data.firstName,

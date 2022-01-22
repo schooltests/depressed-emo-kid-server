@@ -8,7 +8,7 @@ export const userCommandsList = Object.values(UserCommands);
 export const adminCommandsList = Object.values(AdminCommands);
 
 export const predefinedReplies = {
-  hello: `Пошел нахуй`,
+  hello: `Привет как дела`,
   test: 'Создайте свой тест на дружбу',
 };
 

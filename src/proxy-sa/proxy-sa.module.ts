@@ -1,5 +1,6 @@
 import { HttpModule } from '@nestjs/axios';
 import { Global, Module } from '@nestjs/common';
+import { GraphService } from './graph.service';
 import { ProxySAController } from './proxy-sa.controller';
 import { ProxySAService } from './proxy-sa.service';
 
@@ -7,6 +8,6 @@ import { ProxySAService } from './proxy-sa.service';
 @Module({
   imports: [HttpModule],
   controllers: [ProxySAController],
-  providers: [ProxySAService],
+  providers: [ProxySAService, GraphService],
 })
 export class ProxySA {}
